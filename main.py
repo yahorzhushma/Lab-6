@@ -7,16 +7,19 @@ bot = telebot.TeleBot('6786101341:AAG03-QppB_BaRggZsDC5jdrfwxtpn903RY')
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = types.ReplyKeyboardMarkup()
+
     reg = types.KeyboardButton('Регистрация')
     sched = types.KeyboardButton('Расписание')
     spkrs = types.KeyboardButton('Спикеры')
     merch = types.KeyboardButton('Мерч')
     pray_rooms = types.KeyboardButton('Молитвенные комнаты')
     loc = types.KeyboardButton('Как добраться?')
+
     markup.row(reg)
     markup.row(sched, spkrs)
     markup.row(pray_rooms, merch)
     markup.row(loc)
+
     bot.send_message(message.chat.id, 'Привет', reply_markup=markup)
     bot.register_next_step_handler(message, on_click)
 
@@ -58,7 +61,7 @@ def on_click(message):
         bot.register_next_step_handler(message, on_click)
 
     elif message.text == "Как добраться?":
-        bot.send_location(1046586658, 53.878056, 27.490880)
+        bot.send_location(message.chat.id, 53.878056, 27.490880)
         bot.send_message(message.chat.id, 'Мы находимся здесь. Основная часть конференции будет проходить в главном зале церкви 💒.\nЕсли у тебя возникнут вопросы❓, в какое здание или комнату нужно идти, спроси любого человека рядом, навреняка он поможет тебе и, возможно, ты найдешь нового друга 🤝')
         bot.register_next_step_handler(message, on_click)
 
